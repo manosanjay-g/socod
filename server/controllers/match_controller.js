@@ -1,28 +1,28 @@
 const userModel = require('../models/user_model')
 const activity_model = require('../models/activity_model')
 
-const likePerson = async(req,res)=>{
+const likePerson = async (req, res) => {
     try {
-        const {giver_id,receiver_id} = req.body
-        if(!(giver_id && receiver_id)){
+        const { giver_id, receiver_id } = req.body
+        if (!(giver_id && receiver_id)) {
             return res.status(400).json({
-                error:"All inputs are required"
+                error: "All inputs are required"
             })
         }
-        const user = userModel.findByIdAndUpdate({_id:giver_id},{
-            $push:{liked:receiver_id}
+        const user = userModel.findByIdAndUpdate({ _id: giver_id }, {
+            $push: { liked: receiver_id }
         })
-        const receiver = userModel.findById({_id:receiver_id})
-        if(receiver.liked.includes(giver_id)){
-            userModel.findByIdAndUpdate({_id:giver_id},{
-                $push:{matched:receiver_id}
+        const receiver = userModel.findById({ _id: receiver_id })
+        if (receiver.liked.includes(giver_id)) {
+            userModel.findByIdAndUpdate({ _id: giver_id }, {
+                $push: { matched: receiver_id }
             })
-            userModel.findByIdAndUpdate({_id:receiver_id},{
-                $push:{matched:giver_id}
+            userModel.findByIdAndUpdate({ _id: receiver_id }, {
+                $push: { matched: giver_id }
             })
         }
         const likeActivity = await activity_model.create({
-            type:"like",
+            type: "like",
             giver_id,
             receiver_id
         })
@@ -36,19 +36,19 @@ const likePerson = async(req,res)=>{
     }
 }
 
-const unlikePerson = async(req,res) =>{
+const unlikePerson = async (req, res) => {
     try {
-        const {giver_id,receiver_id} = req.body
-        if(!(giver_id && receiver_id)){
+        const { giver_id, receiver_id } = req.body
+        if (!(giver_id && receiver_id)) {
             return res.status(400).json({
-                error:"All inputs are required"
+                error: "All inputs are required"
             })
         }
-        const user = userModel.findByIdAndUpdate({_id:giver_id},{
-            $push:{unliked:receiver_id}
+        const user = userModel.findByIdAndUpdate({ _id: giver_id }, {
+            $push: { unliked: receiver_id }
         })
         const unlikeActivity = await activity_model.create({
-            type:"unlike",
+            type: "unlike",
             giver_id,
             receiver_id
         })
@@ -66,5 +66,4 @@ const unlikePerson = async(req,res) =>{
 module.exports = {
     likePerson,
     unlikePerson,
-    matchPerson
 }
