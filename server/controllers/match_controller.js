@@ -12,11 +12,21 @@ const likePerson = async(req,res)=>{
         const user = userModel.findByIdAndUpdate({_id:giver_id},{
             $push:{liked:receiver_id}
         })
+        const receiver = userModel.findById({_id:receiver_id})
+        if(receiver.liked.includes(giver_id)){
+            userModel.findByIdAndUpdate({_id:giver_id},{
+                $push:{matched:receiver_id}
+            })
+            userModel.findByIdAndUpdate({_id:receiver_id},{
+                $push:{matched:giver_id}
+            })
+        }
         const likeActivity = await activity_model.create({
             type:"like",
             giver_id,
             receiver_id
         })
+
         res.status(201).json({
             user,
             likeActivity
@@ -51,13 +61,7 @@ const unlikePerson = async(req,res) =>{
     }
 }
 
-const matchPerson = () => {
-    try {
-        
-    } catch (error) {
-        console.log(error);
-    }
-}
+
 
 module.exports = {
     likePerson,
