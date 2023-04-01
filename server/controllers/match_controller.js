@@ -9,16 +9,17 @@ const likePerson = async (req, res) => {
                 error: "All inputs are required"
             })
         }
-        const user = userModel.findByIdAndUpdate({ _id: giver_id }, {
-            $push: { liked: receiver_id }
+
+        const user = await userModel.findByIdAndUpdate({ _id: giver_id }, {
+            $addToSet: { liked: receiver_id }
         })
-        const receiver = userModel.findById({ _id: receiver_id })
-        if (receiver.liked.includes(giver_id)) {
-            userModel.findByIdAndUpdate({ _id: giver_id }, {
-                $push: { matched: receiver_id }
-            })
-            userModel.findByIdAndUpdate({ _id: receiver_id }, {
-                $push: { matched: giver_id }
+        const oldLikeActivity = await activity_model.findOne({
+            giver_id,
+            receiver_id
+        })
+        if (oldLikeActivity) {
+            return res.status(201).json({
+                error:"Like Activity already present"
             })
         }
         const likeActivity = await activity_model.create({
@@ -27,6 +28,22 @@ const likePerson = async (req, res) => {
             receiver_id
         })
 
+        const similarActivity = await activity_model.findOne({ giver_id: receiver_id, receiver_id: giver_id })
+        
+        console.log(similarActivity);
+        
+        if (similarActivity) {
+
+            const user1 = await userModel.findOneAndUpdate({ _id: giver_id }, {
+                $addToSet: { matched: receiver_id }
+            })
+            const user2 = await userModel.findOneAndUpdate({ _id: receiver_id }, {
+                $addToSet: { matched: giver_id }
+            })
+
+            console.log(`${user1.name} matched with ${user2.name}`);
+
+        }
         res.status(201).json({
             user,
             likeActivity
@@ -45,7 +62,7 @@ const unlikePerson = async (req, res) => {
             })
         }
         const user = userModel.findByIdAndUpdate({ _id: giver_id }, {
-            $push: { unliked: receiver_id }
+            $addToSet: { unliked: receiver_id }
         })
         const unlikeActivity = await activity_model.create({
             type: "unlike",

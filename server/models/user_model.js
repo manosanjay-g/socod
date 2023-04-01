@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    liked: { type: Array, required:true },
+    img: { type: Array, default:[] },
     gender: { type: String, required: true },
     gender_interest: { type: String, required: true },
     bio: { type: String, required: true },
@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     phone: { type: Number, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    dept_id: { type: Number, required: true },
+    dept_id: { type: String, required: true },
     year: { type: Number, required: true },
     liked: { type: Array, default: [] },
     unliked: { type: Array, default: [] },

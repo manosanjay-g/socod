@@ -4,9 +4,12 @@ const cors = require('cors')
 require('dotenv').config()
 
 //Router Initialization
+const authRouter = require('./routers/auth_router')
+const matchRouter = require('./routers/match_router')
 
 //DB Init
 const connectDB = require('./configs/database_config')
+
 //Middleware Initialization
 
 //Middlewares
@@ -15,6 +18,9 @@ app.use(express.json())
 app.use('/public',express.static('public'))
 
 //Routes
+app.use('/auth',authRouter);
+app.use('/match',matchRouter);
+
 app.get('/',(req,res)=>{
     res.send('SOCOD');
 })
