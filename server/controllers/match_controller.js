@@ -19,7 +19,7 @@ const likePerson = async (req, res) => {
         })
         if (oldLikeActivity) {
             return res.status(201).json({
-                error:"Like Activity already present"
+                error: "Like Activity already present"
             })
         }
         const likeActivity = await activity_model.create({
@@ -29,9 +29,9 @@ const likePerson = async (req, res) => {
         })
 
         const similarActivity = await activity_model.findOne({ giver_id: receiver_id, receiver_id: giver_id })
-        
+
         console.log(similarActivity);
-        
+
         if (similarActivity) {
 
             const user1 = await userModel.findOneAndUpdate({ _id: giver_id }, {
@@ -40,7 +40,11 @@ const likePerson = async (req, res) => {
             const user2 = await userModel.findOneAndUpdate({ _id: receiver_id }, {
                 $addToSet: { matched: giver_id }
             })
-
+            await activity_model.create({
+                type: "match",
+                giver_id,
+                receiver_id
+            })
             console.log(`${user1.name} matched with ${user2.name}`);
 
         }
