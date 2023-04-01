@@ -26,7 +26,49 @@ const getUserActivities = async(req,res) => {
     }
 }
 
+const getLikesActivity = async(req,res) => {
+    try {
+
+        const like_activities = await activity_model.find({type:"like"})
+
+        return res.status(200).json({
+            like_activities
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getUnlikesActivity = async(req,res) => {
+    try {
+
+        const unlikes_activity = await activity_model.find({type:"unlike"})
+
+        return res.status(200).json({
+            unlikes_activity
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getMatchesActivity = async(req,res) => {
+    try {
+
+        const match_activity = await activity_model.find({type:"match"})
+
+        return res.status(200).json({
+            match_activity
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     getActivities,
     getUserActivities,
+    getLikesActivity,
+    getMatchesActivity,
+    getUnlikesActivity
 }
