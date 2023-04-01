@@ -26,7 +26,8 @@ const readUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        const { id, name, gender, gender_interest, bio, interests, phone, year } = req.body
+        const id = req.params.id
+        const { name, gender, gender_interest, bio, interests, phone, year } = req.body
         if (!(name && gender && bio && phone && year && gender_interest)) {
             return res.status(400).json({
                 error: "All fields are required"
@@ -49,7 +50,7 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        const { id } = req.body
+        const id = req.params.id
         const deletedUser = await userModel.deleteOne({ _id: id })
         res.status(204).json({ deletedUser })
     } catch (error) {
