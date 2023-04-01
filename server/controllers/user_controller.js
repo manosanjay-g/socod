@@ -1,5 +1,17 @@
 const userModel = require('../models/user_model')
 
+const readUsers = async (req, res) => {
+    try {
+
+        const users = await userModel.find({  })
+        
+        return res.status(200).json({
+            users
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
 const readUser = async (req, res) => {
     try {
         const id = req.params.id
@@ -59,6 +71,7 @@ const deleteUser = async (req, res) => {
 }
 
 module.exports = {
+    readUsers,
     readUser,
     deleteUser,
     updateUser,

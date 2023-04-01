@@ -7,6 +7,7 @@ require('dotenv').config()
 const authRouter = require('./routers/auth_router')
 const matchRouter = require('./routers/match_router')
 const userRouter = require('./routers/user_router')
+const adminRouter = require('./routers/admin_router')
 
 //DB Init
 const connectDB = require('./configs/database_config')
@@ -22,6 +23,7 @@ app.use('/public',express.static('public'))
 app.use('/auth',authRouter);
 app.use('/match',matchRouter);
 app.use('/users',userRouter);
+app.use('/admin',adminRouter);
 
 app.get('/',(req,res)=>{
     res.send('SOCOD');
