@@ -1,6 +1,6 @@
 const userModel = require('../models/user_model')
-const activity_model = require('../models/activity_model')
-
+const activityModel = require('../models/activity_model')
+const conversationModel = require('../models/conversation_model')
 const likePerson = async (req, res) => {
     try {
         const { giver_id, receiver_id } = req.body
@@ -13,7 +13,7 @@ const likePerson = async (req, res) => {
         const user = await userModel.findByIdAndUpdate({ _id: giver_id }, {
             $addToSet: { liked: receiver_id }
         })
-        const oldLikeActivity = await activity_model.findOne({
+        const oldLikeActivity = await activityModel.findOne({
             giver_id,
             receiver_id
         })
@@ -22,13 +22,13 @@ const likePerson = async (req, res) => {
                 error: "Like Activity already present"
             })
         }
-        const likeActivity = await activity_model.create({
+        const likeActivity = await activityModel.create({
             type: "like",
             giver_id,
             receiver_id
         })
 
-        const similarActivity = await activity_model.findOne({ giver_id: receiver_id, receiver_id: giver_id })
+        const similarActivity = await activityModel.findOne({ giver_id: receiver_id, receiver_id: giver_id })
 
         console.log(similarActivity);
 
@@ -40,10 +40,13 @@ const likePerson = async (req, res) => {
             const user2 = await userModel.findOneAndUpdate({ _id: receiver_id }, {
                 $addToSet: { matched: giver_id }
             })
-            await activity_model.create({
+            await activityModel.create({
                 type: "match",
                 giver_id,
                 receiver_id
+            })
+            await conversationModel.create({
+                members:[giver_id,receiver_id]
             })
             console.log(`${user1.name} matched with ${user2.name}`);
 
@@ -68,7 +71,7 @@ const unlikePerson = async (req, res) => {
         const user = userModel.findByIdAndUpdate({ _id: giver_id }, {
             $addToSet: { unliked: receiver_id }
         })
-        const unlikeActivity = await activity_model.create({
+        const unlikeActivity = await activityModel.create({
             type: "unlike",
             giver_id,
             receiver_id
