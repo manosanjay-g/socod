@@ -10,11 +10,11 @@ const getConversations = async(req,res) => {
             })
         }
 
-        const messages = await conversationModel.find({members:{
-            $in:[id]
+        const conversations = await conversationModel.find({members:{
+            $in:id
         }});
 
-        return res.status(200).json({messages})
+        return res.status(200).json({conversations})
     }catch(error){
         console.log(error);
     }
