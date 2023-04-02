@@ -1,4 +1,24 @@
 const messageModel = require("../models/message_model")
+const conversationModel = require('../models/conversation_model')
+const getConversations = async(req,res) => {
+    try{
+        const id = req.params.id
+
+        if(!(id)){
+            return res.status(400).json({
+                error:"All inputs are required"
+            })
+        }
+
+        const messages = await conversationModel.find({members:{
+            $in:[id]
+        }});
+
+        return res.status(200).json({messages})
+    }catch(error){
+        console.log(error);
+    }
+}
 
 const getMessages = async(req,res) => {
     try{
@@ -41,5 +61,6 @@ const createMessage = async(req,res) => {
 
 module.exports = {
     getMessages,
-    createMessage
+    createMessage,
+    getConversations
 }
