@@ -1,4 +1,5 @@
 const userModel = require('../models/user_model')
+const activityModel = require("../models/activity_model")
 
 const readUsers = async (req, res) => {
     try {
@@ -64,6 +65,10 @@ const deleteUser = async (req, res) => {
     try {
         const id = req.params.id
         const deletedUser = await userModel.deleteOne({ _id: id })
+        
+        await activityModel.deleteMany({giver_id:id})
+        await activityModel.deleteMany({receiver_id:id})
+
         res.status(204).json({ deletedUser })
     } catch (error) {
         console.log(error);
