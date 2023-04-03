@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:socod/pages/Login.dart';
+import 'package:socod/auths/Login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,10 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color(0xFFEFEFEF),
+        primarySwatch: Colors.purple,
       ),
       home: const Login(),
     );
