@@ -46,7 +46,7 @@ const likePerson = async (req, res) => {
                 receiver_id
             })
             await conversationModel.create({
-                members:[giver_id,receiver_id]
+                members: [giver_id, receiver_id]
             })
             console.log(`${user1.name} matched with ${user2.name}`);
 
@@ -85,9 +85,32 @@ const unlikePerson = async (req, res) => {
     }
 }
 
+const getRecommendations = async (req, res) => {
+    const id = req.params.id;
 
+    if (!id) {
+        return res.status(400).json({
+            error: "All inputs are required"
+        })
+    }
+
+    const user = await userModel.findOne({ _id: id });
+    console.log(user.gender_interest);
+    console.log(user.gender);
+    console.log(user._id.toString());
+    const recommendations = await userModel.find({ gender: user.gender_interest, gender_interest: user.gender});
+
+    const filteredRecommendations = recommendations.filter((e)=>{
+        if(!(user.liked.includes(e._id.toString()) || user.unliked.includes(e._id.toString()) || user.matched.includes(e._id.toString()))){
+            return e;
+        }
+    })
+
+    return res.status(200).json({ filteredRecommendations })
+}
 
 module.exports = {
     likePerson,
     unlikePerson,
+    getRecommendations
 }
