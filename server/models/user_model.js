@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     liked: { type: Array, default: [] },
     unliked: { type: Array, default: [] },
     matched: { type: Array, default: [] },
-    verfied: { type: Boolean, default: false }
+    verified: { type: Boolean, default: false }
 }, {
     timestamps: true
 })

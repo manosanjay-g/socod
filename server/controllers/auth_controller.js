@@ -60,6 +60,11 @@ const loginUser = async (req, res) => {
                 error: "User does not exist"
             })
         }
+        if(!user.verified){
+            return res.status(400).json({
+                error:"User not verified"
+            })
+        }
 
         decryptedPassword = await bcrypt.compare(password, user.password);
         if (user && decryptedPassword) {

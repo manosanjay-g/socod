@@ -9,6 +9,7 @@ const matchRouter = require('./routers/match_router')
 const userRouter = require('./routers/user_router')
 const adminRouter = require('./routers/admin_router')
 const messageRouter = require('./routers/message_router')
+const verificationRouter = require('./routers/verification_router')
 
 //DB Init
 const connectDB = require('./configs/database_config')
@@ -25,7 +26,8 @@ app.use('/auth',authRouter);
 app.use('/match',matchRouter);
 app.use('/users',userRouter);
 app.use('/admin',adminRouter);
-app.use('/messages/',messageRouter);
+app.use('/messages',messageRouter);
+app.use('/verification',verificationRouter)
 
 app.get('/',(req,res)=>{
     res.send('SOCOD');
