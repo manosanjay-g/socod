@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:socod/auths/dobpage.dart";
 
 import "../consts/textFields.dart";
 
@@ -13,9 +14,12 @@ class _CreateAccountState extends State<CreateAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(onPressed: (){}, label: Text("Next"), icon: Icon(Icons.chevron_right),),
+      floatingActionButton: FloatingActionButton.extended(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>DOB()));
+      }, 
+        label: Text("Next"), 
+        icon: Icon(Icons.chevron_right),),
       body: Container(
-        color: Textfields.bgColor,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),

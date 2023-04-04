@@ -16,7 +16,6 @@ class _LoginState extends State<Login> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: Colors.grey[900],
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: Form(
           key: _formKey,
@@ -26,12 +25,12 @@ class _LoginState extends State<Login> {
               TextFormField(
                 decoration: InputDecoration(
                   hintText: 'Email',
-                    hintStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    hintStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 0.0,
                       ),
-                        borderRadius: BorderRadius.circular(30.0))),
+                        borderRadius: BorderRadius.circular(20.0))),
               ),
               const SizedBox(
                 height: 5,
@@ -39,11 +38,11 @@ class _LoginState extends State<Login> {
               TextFormField(
                 decoration: InputDecoration(
                     hintText: 'Password',
-                    hintStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    hintStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                     border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
 
-                        borderRadius: BorderRadius.circular(30.0))),
+                        borderRadius: BorderRadius.circular(20.0))),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
