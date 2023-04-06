@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const roleList = require('./configs/roles_config')
 require('dotenv').config()
 
 //Router Initialization
@@ -15,7 +16,8 @@ const verificationRouter = require('./routers/verification_router')
 const connectDB = require('./configs/database_config')
 
 //Middleware Initialization
-
+const {verifyRoles} = require('./middlewares/verify_roles_middleware') 
+const {authenticateToken} = require('./middlewares/auth_middleware')
 //Middlewares
 app.use(cors())
 app.use(express.json())
@@ -23,10 +25,10 @@ app.use('/public',express.static('public'))
 
 //Routes
 app.use('/auth',authRouter);
-app.use('/match',matchRouter);
-app.use('/users',userRouter);
-app.use('/admin',adminRouter);
-app.use('/messages',messageRouter);
+app.use('/match',authenticateToken,verifyRoles([roleList.User]),matchRouter);
+app.use('/users',authenticateToken,verifyRoles([roleList.User]),userRouter);
+app.use('/admin',authenticateToken,verifyRoles([roleList.Admin]),adminRouter);
+app.use('/messages',authenticateToken,verifyRoles([roleList.User]),messageRouter);
 app.use('/verification',verificationRouter)
 
 app.get('/',(req,res)=>{

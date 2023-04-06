@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs')
 
 const registerUser = async (req, res) => {
     try {
-        const { name, gender, gender_interest, bio, interests, phone, email, password, dept_id, year } = req.body
-        if (!(name && gender && bio && phone && email && password && dept_id && year && gender_interest)) {
+        const { name, gender, gender_interest, bio, interests, phone, email, password, dept_id, year,roles } = req.body
+        if (!(name && gender && bio && phone && email && password && dept_id && year && gender_interest && roles)) {
             return res.status(400).json({
                 error: "All fields are required"
             })
@@ -34,7 +34,8 @@ const registerUser = async (req, res) => {
             email: email.toLowerCase(),
             password: encryptedPassword,
             dept_id,
-            year
+            year,
+            roles
         })
         const token = jwt.sign({
             user_id: user._id,

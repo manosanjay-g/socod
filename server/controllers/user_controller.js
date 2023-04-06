@@ -1,5 +1,7 @@
 const userModel = require('../models/user_model')
 const activityModel = require("../models/activity_model")
+const messageModel = require('../models/message_model');
+const conversationModel = require('../models/conversation_model');
 
 const readUsers = async (req, res) => {
     try {
@@ -40,8 +42,8 @@ const readUser = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const id = req.params.id
-        const { name, gender, gender_interest, bio, interests, phone, year } = req.body
-        if (!(name && gender && bio && phone && year && gender_interest)) {
+        const { name, gender, gender_interest, bio, interests, phone, year} = req.body
+        if (!(name && gender && bio && phone && year && gender_interest )) {
             return res.status(400).json({
                 error: "All fields are required"
             })
@@ -69,7 +71,29 @@ const deleteUser = async (req, res) => {
         await activityModel.deleteMany({giver_id:id})
         await activityModel.deleteMany({receiver_id:id})
 
+        const userConvo = await conversationModel.find({members:{$in:[id]}})
+
+        await messageModel.deleteMany({conversation_id:userConvo._id});
+
+        await conversationModel.deleteMany({members:{$in:[id]}});
+
         res.status(204).json({ deletedUser })
+    } catch (error) {
+        console.log(error);
+    }
+}
+const deleteUsers = async (req, res) => {
+    try {
+        const deletedUsers = await userModel.deleteMany({})
+        
+        await activityModel.deleteMany({});
+        await activityModel.deleteMany({});
+
+        await conversationModel.deleteMany({});
+        await messageModel.deleteMany({});
+
+        res.status(204).json({ deletedUsers })
+        
     } catch (error) {
         console.log(error);
     }
@@ -78,6 +102,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
     readUsers,
     readUser,
-    deleteUser,
     updateUser,
+    deleteUser,
+    deleteUsers,
 }

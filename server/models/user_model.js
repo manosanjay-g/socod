@@ -11,11 +11,13 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     dept_id: { type: String, required: true },
+    token: { type: String, required: false },
     year: { type: Number, required: true },
     liked: { type: Array, default: [] },
     unliked: { type: Array, default: [] },
     matched: { type: Array, default: [] },
-    verified: { type: Boolean, default: false }
+    verified: { type: Boolean, default: false },
+    roles:{type:Array,required:true}
 }, {
     timestamps: true
 })
