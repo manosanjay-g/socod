@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
-
-const {readUser, updateUser, deleteUser, readUsers} = require('../controllers/user_controller')
+const {readUser, updateUser, deleteUser, readUsers, deleteUsers} = require('../controllers/user_controller')
 const { registerUser } = require('../controllers/auth_controller')
 const { getActivities, getUserActivities, getLikesActivity, getUnlikesActivity, getMatchesActivity } = require('../controllers/activity_controller')
 const { readDepts, readDept, createDept, updateDept, deleteDept } = require("../controllers/dept_controller")
@@ -11,6 +10,7 @@ router.post('/users/',registerUser);
 router.get('/users/',readUsers);
 router.get('/users/:id',readUser);
 router.patch('/users/:id',updateUser);
+router.delete('/users/',deleteUsers);
 router.delete('/users/:id',deleteUser);
 
 //Department Related
