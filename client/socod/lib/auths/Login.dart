@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:socod/auths/createacc.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -23,33 +24,45 @@ class _LoginState extends State<Login> {
             children: [
               TextFormField(
                 decoration: InputDecoration(
+                  hintText: 'Email',
+                    hintStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0))),
+                      borderSide: BorderSide(
+                        width: 0.0,
+                      ),
+                        borderRadius: BorderRadius.circular(20.0))),
               ),
-             const SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               TextFormField(
                 decoration: InputDecoration(
+                    hintText: 'Password',
+                    hintStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0))),
+                        borderSide: BorderSide(color: Colors.white),
+
+                        borderRadius: BorderRadius.circular(20.0))),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      onTap: (){},
-                      child:const Text(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const CreateAccount()));
+                      },
+                      child: const Text(
                         "Create Acc",
                         style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.lightBlue),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.purple,
+                        ),
                       ),
                     )),
               ),
-             const SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Container(
@@ -57,9 +70,9 @@ class _LoginState extends State<Login> {
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: Colors.deepPurple,
+                    color: Colors.purple,
                     borderRadius: BorderRadius.circular(30.0)),
-                child:const Text(
+                child: const Text(
                   "LOGIN",
                   style: TextStyle(
                       color: Colors.white,
