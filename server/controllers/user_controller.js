@@ -2,7 +2,7 @@ const userModel = require('../models/user_model')
 const activityModel = require("../models/activity_model")
 const messageModel = require('../models/message_model');
 const conversationModel = require('../models/conversation_model');
-
+const rolesList = require('../configs/roles_config')
 const readUsers = async (req, res) => {
     try {
 
@@ -84,7 +84,7 @@ const deleteUser = async (req, res) => {
 }
 const deleteUsers = async (req, res) => {
     try {
-        const deletedUsers = await userModel.deleteMany({})
+        const deletedUsers = await userModel.deleteMany({roles:{$nin:rolesList.Admin}});
         
         await activityModel.deleteMany({});
         await activityModel.deleteMany({});

@@ -42,6 +42,7 @@ const registerUser = async (req, res) => {
             email
         }, process.env.JWT_KEY)
         user.token = token;
+        user.save()
         res.status(201).json(user)
     } catch (err) {
         console.log(err);
@@ -74,6 +75,7 @@ const loginUser = async (req, res) => {
                 email
             }, process.env.JWT_KEY)
             user.token = token;
+            user.save();
             return res.status(200).json(user);
         }
         res.status(400).json({
