@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:socod/auths/indentification/sexuality.dart';
+import 'package:socod/consts/nextbtn.dart';
 
 import '../../consts/containerconsts.dart';
-
 
 class Gender extends StatefulWidget {
   const Gender({Key? key}) : super(key: key);
@@ -11,10 +12,13 @@ class Gender extends StatefulWidget {
 }
 
 class _GenderState extends State<Gender> {
-  bool isSelected = false;
+  bool isMaleSelected = false;
+  bool isFemaleSelected = false;
+  bool isOthersSelected = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: nextbtn(context, MaterialPageRoute(builder: (context)=>Sexuality())),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -23,33 +27,39 @@ class _GenderState extends State<Gender> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("YOUR", style: TextStyle(
-              fontWeight: FontWeight.bold,fontSize:30),),
-
-            GestureDetector(
-              onTap: (){
-                setState(() {
-                  isSelected = !isSelected;
-                });
-              },
-              child: genderIndentification(context, isSelected, "MAN")
+            Text(
+              "YOUR",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             ),
             GestureDetector(
-                onTap: (){
+                onTap: () {
                   setState(() {
-                    isSelected = !isSelected;
+                    isMaleSelected = !isMaleSelected;
+                    isFemaleSelected = false;
+                    isOthersSelected = false;
                   });
                 },
-                child: genderIndentification(context, isSelected, "WOMAN")
-            ),
+                child: genderIndentification(context, isMaleSelected, "MAN")),
             GestureDetector(
-                onTap: (){
+                onTap: () {
                   setState(() {
-                    isSelected = !isSelected;
+                    isMaleSelected = false;
+                    isFemaleSelected = !isFemaleSelected;
+                    isOthersSelected = false;
                   });
                 },
-                child: genderIndentification(context, isSelected, "OTHERS")
-            ),
+                child:
+                    genderIndentification(context, isFemaleSelected, "WOMAN")),
+            GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isMaleSelected = false;
+                    isFemaleSelected = false;
+                    isOthersSelected = !isOthersSelected;
+                  });
+                },
+                child:
+                    genderIndentification(context, isOthersSelected, "OTHERS")),
           ],
         ),
       ),
