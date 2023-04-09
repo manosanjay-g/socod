@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:socod/auths/indentification/gender.dart';
 
-import 'package:dob_input_field/dob_input_field.dart';
-import 'package:socod/auths/imterests.dart';
 import 'package:socod/consts/nextbtn.dart';
 
 
@@ -30,7 +29,7 @@ class _DOBState extends State<DOB> {
   Widget build(BuildContext context) {
     print(DateTime(2002, 8, 21).isAtLeastYearsOld(18)); // Prints: false
     return Scaffold(
-      floatingActionButton: nextbtn(context, MaterialPageRoute(builder: (context)=>Interests())),
+      floatingActionButton: nextbtn(context, MaterialPageRoute(builder: (context)=>Gender())),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
