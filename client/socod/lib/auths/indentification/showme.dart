@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:socod/auths/indentification/showme.dart';
-import 'package:socod/consts/nextbtn.dart';
 
 import '../../consts/containerconsts.dart';
+import '../../consts/nextbtn.dart';
 
-class Gender extends StatefulWidget {
-  const Gender({Key? key}) : super(key: key);
+class ShowMe extends StatefulWidget {
+  const ShowMe({Key? key}) : super(key: key);
 
   @override
-  State<Gender> createState() => _GenderState();
+  State<ShowMe> createState() => _ShowMeState();
 }
 
-class _GenderState extends State<Gender> {
+class _ShowMeState extends State<ShowMe> {
   bool isMaleSelected = false;
   bool isFemaleSelected = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,7 @@ class _GenderState extends State<Gender> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "YOUR",
+              "SHOW ME",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             ),
             GestureDetector(
@@ -41,12 +41,11 @@ class _GenderState extends State<Gender> {
             GestureDetector(
                 onTap: () {
                   setState(() {
-                    isMaleSelected = false;
-                    isFemaleSelected = !isFemaleSelected;
+                    isMaleSelected = !isMaleSelected;
+                    isFemaleSelected = false;
                   });
                 },
-                child:
-                    genderIndentification(context, isFemaleSelected, "WOMAN")),
+                child: genderIndentification(context, isMaleSelected, "FEMALE"))
           ],
         ),
       ),
