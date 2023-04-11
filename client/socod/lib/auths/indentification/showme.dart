@@ -41,11 +41,11 @@ class _ShowMeState extends State<ShowMe> {
             GestureDetector(
                 onTap: () {
                   setState(() {
-                    isMaleSelected = !isMaleSelected;
-                    isFemaleSelected = false;
+                    isMaleSelected = false;
+                    isFemaleSelected = !isFemaleSelected;
                   });
                 },
-                child: genderIndentification(context, isMaleSelected, "FEMALE"))
+                child: genderIndentification(context, isFemaleSelected, "FEMALE"))
           ],
         ),
       ),
