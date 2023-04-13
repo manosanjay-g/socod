@@ -18,7 +18,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           child: SizedBox(
             height: double.infinity,
             width: double.infinity,
