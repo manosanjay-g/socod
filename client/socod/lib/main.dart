@@ -82,14 +82,20 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
         body: _pages[_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          items: _pagesIcon,
-          selectedItemColor: Colors.purple[300],
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          unselectedItemColor: Colors.white,
+        bottomNavigationBar: Theme(
+          data: ThemeData(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+          ),
+          child: BottomNavigationBar(
+            items: _pagesIcon,
+            selectedItemColor: Colors.purple[300],
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            unselectedItemColor: Colors.white,
+          ),
         ),
       ),
     );

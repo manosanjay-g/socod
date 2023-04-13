@@ -17,6 +17,10 @@ class HomeScreen extends StatelessWidget {
       )
     ];
     return CardSwiper(
+      isVerticalSwipingEnabled: false,
+      maxAngle: 45,
+      initialIndex: 0,
+      onEnd: () => print("emd"),
       cardBuilder: (context, index) => cards[index],
       cardsCount: cards.length,
     );

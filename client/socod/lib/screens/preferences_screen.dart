@@ -20,12 +20,126 @@ class PreferencesScreen extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Container(
-              width: double.infinity,
-              height: 260,
-              color: Colors.grey,
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  "Account Preferences",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Icon(Icons.arrow_forward_ios),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  "Account Preferences",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Icon(Icons.arrow_forward_ios),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  "Account Preferences",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Icon(Icons.arrow_forward_ios),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  "Account Preferences",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Icon(Icons.arrow_forward_ios),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              "Delete Account",
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              "Logout",
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 20,
+              ),
             ),
           )
         ],
