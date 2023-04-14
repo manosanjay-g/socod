@@ -11,9 +11,9 @@ class SocodApp extends StatefulWidget {
 class _SocodAppState extends State<SocodApp> {
   int _selectedIndex = 0;
   static final List _pages = [
-    HomeScreen(),
-    MatchesScreen(),
-    PreferencesScreen(),
+    const HomeScreen(),
+    const MatchesScreen(),
+    const PreferencesScreen(),
   ];
   static const List<BottomNavigationBarItem> _pagesIcon = [
     BottomNavigationBarItem(
@@ -51,6 +51,7 @@ class _SocodAppState extends State<SocodApp> {
             fontWeight: FontWeight.w600,
           ),
         ),
+        leading: null,
         backgroundColor: Colors.transparent,
         centerTitle: true,
         elevation: 0,

@@ -15,7 +15,7 @@ class IndividualUserScreen extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(7),
-                image: DecorationImage(
+                image: const DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(
                       "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80"),
@@ -23,40 +23,40 @@ class IndividualUserScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             "Aparna , 27",
             style: TextStyle(
               fontSize: 35,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Text(
+          const Text(
             "3rd year , CSE",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.normal,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             "Bio",
             style: TextStyle(
               fontSize: 35,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Text(
+          const Text(
             "Lorem",
             style: TextStyle(
               fontSize: 20,

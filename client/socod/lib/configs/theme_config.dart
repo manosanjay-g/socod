@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
-  static const secondary = Color(0XFF9575CD);
+  static const secondary = Color.fromARGB(255, 211, 61, 189);
   static const text = Color(0XFFFFFFFF);
-  static const icon = Color(0XFFFFFFFF);
-  static const background = Color.fromARGB(255, 30, 30, 30);
+  static const icon = Color.fromARGB(255, 255, 255, 255);
+  static const background = Color.fromARGB(255, 27, 27, 27);
 }
 
 abstract class AppTheme {
@@ -16,5 +16,7 @@ abstract class AppTheme {
         iconTheme: const IconThemeData(color: AppColors.icon),
         accentColor: AppColors.secondary,
         focusColor: AppColors.text,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
       );
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatefulWidget {
-  SignInScreen({super.key});
+  const SignInScreen({super.key});
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -38,6 +38,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       height: 20,
                     ),
                     TextField(
+                      keyboardType: TextInputType.emailAddress,
                       controller: _email,
                       cursorColor: Colors.white,
                       decoration: const InputDecoration(
@@ -72,9 +73,13 @@ class _SignInScreenState extends State<SignInScreen> {
                               _obscurePassword = !(_obscurePassword);
                             }),
                           },
-                          icon: const Icon(
-                            Icons.remove_red_eye,
-                          ),
+                          icon: _obscurePassword
+                              ? const Icon(
+                                  Icons.remove_red_eye,
+                                )
+                              : const Icon(
+                                  Icons.visibility_off,
+                                ),
                         ),
                         hintText: "Password",
                         border: const OutlineInputBorder(),
@@ -89,7 +94,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(7),
                         child: Container(
-                          color: Colors.purple[300],
+                          color: Theme.of(context).accentColor,
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(
                             vertical: 15,
@@ -113,11 +118,11 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: () => {},
+                  onTap: () => {Navigator.pushNamed(context, '/signup-screen')},
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(7),
                     child: Container(
-                      color: Colors.purple[300],
+                      color: Theme.of(context).accentColor,
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(
                         vertical: 15,

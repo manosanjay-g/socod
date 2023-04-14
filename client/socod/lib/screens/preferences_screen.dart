@@ -37,7 +37,7 @@ class PreferencesScreen extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      child: Icon(Icons.arrow_forward_ios),
+                      child: const Icon(Icons.arrow_forward_ios),
                     ),
                   ),
                 )
@@ -61,7 +61,7 @@ class PreferencesScreen extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      child: Icon(Icons.arrow_forward_ios),
+                      child: const Icon(Icons.arrow_forward_ios),
                     ),
                   ),
                 )
@@ -85,7 +85,7 @@ class PreferencesScreen extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      child: Icon(Icons.arrow_forward_ios),
+                      child: const Icon(Icons.arrow_forward_ios),
                     ),
                   ),
                 )
@@ -109,17 +109,17 @@ class PreferencesScreen extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      child: Icon(Icons.arrow_forward_ios),
+                      child: const Icon(Icons.arrow_forward_ios),
                     ),
                   ),
                 )
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Align(
+          const Align(
             alignment: Alignment.center,
             child: Text(
               "Delete Account",
@@ -129,16 +129,20 @@ class PreferencesScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Align(
             alignment: Alignment.center,
-            child: Text(
-              "Logout",
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: 20,
+            child: GestureDetector(
+              onTap: () =>
+                  {Navigator.popAndPushNamed(context, '/signin-screen')},
+              child: const Text(
+                "Logout",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 20,
+                ),
               ),
             ),
           )
