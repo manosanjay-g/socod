@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:socod/providers/auth_provider.dart';
 
 class PreferencesScreen extends StatelessWidget {
   const PreferencesScreen({super.key});
@@ -132,16 +134,17 @@ class PreferencesScreen extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Align(
-            alignment: Alignment.center,
-            child: GestureDetector(
-              onTap: () =>
-                  {Navigator.popAndPushNamed(context, '/signin-screen')},
-              child: const Text(
-                "Logout",
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 20,
+          Consumer<AuthProvider>(
+            builder: (context, authProvider, _) => Align(
+              alignment: Alignment.center,
+              child: GestureDetector(
+                onTap: () => {authProvider.signOut()},
+                child: const Text(
+                  "Logout",
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ),

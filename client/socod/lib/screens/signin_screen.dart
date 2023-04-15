@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:socod/providers/auth_provider.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -9,7 +11,6 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _email = TextEditingController();
-
   final _password = TextEditingController();
 
   bool _obscurePassword = true;
@@ -85,28 +86,52 @@ class _SignInScreenState extends State<SignInScreen> {
                         border: const OutlineInputBorder(),
                       ),
                     ),
+                    Consumer<AuthProvider>(
+                      builder: (context, authProvider, _) => Container(
+                        child: authProvider.errorMessage() != null
+                            ? Column(
+                                children: [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(authProvider.errorMessage().toString()),
+                                ],
+                              )
+                            : null,
+                      ),
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
-                    GestureDetector(
-                      onTap: () =>
-                          {Navigator.popAndPushNamed(context, "/home")},
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(7),
-                        child: Container(
-                          color: Theme.of(context).accentColor,
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 25,
+                    Consumer<AuthProvider>(
+                      builder: (context, authProvider, _) => GestureDetector(
+                        onTap: () => {
+                          authProvider.signIn(
+                            _email.text,
+                            _password.text,
                           ),
-                          child: const Center(
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600),
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(7),
+                          child: Container(
+                            color: Theme.of(context).accentColor,
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 15,
+                              horizontal: 25,
+                            ),
+                            child: Center(
+                              child: authProvider.isLoading()
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                  : const Text(
+                                      "Login",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                    ),
                             ),
                           ),
                         ),
