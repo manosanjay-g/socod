@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:socod/providers/auth_provider.dart';
 
 class OTPField extends StatefulWidget {
   const OTPField({
@@ -13,8 +15,8 @@ class _OTPFieldState extends State<OTPField> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        Center(
+      children: [
+        const Center(
           child: Text(
             "An OTP has been sent to your mail",
             style: TextStyle(
@@ -23,23 +25,26 @@ class _OTPFieldState extends State<OTPField> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        TextField(
-          keyboardType: TextInputType.number,
-          cursorColor: Colors.white,
-          decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white,
+        Consumer<AuthProvider>(
+          builder: (context, authProvider, _) => TextField(
+            controller: authProvider.otpController,
+            keyboardType: TextInputType.number,
+            cursorColor: Colors.white,
+            decoration: const InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.white,
+                ),
               ),
+              hintText: "Enter the OTP",
+              border: OutlineInputBorder(),
             ),
-            hintText: "Enter the OTP",
-            border: OutlineInputBorder(),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
       ],

@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:socod/providers/auth_provider.dart';
@@ -10,7 +10,6 @@ import 'package:socod/widgets/signup_screen/gender_field.dart';
 import 'package:socod/widgets/signup_screen/name_field.dart';
 import 'package:socod/widgets/signup_screen/otp_field.dart';
 import 'package:socod/widgets/signup_screen/profile_image_field.dart';
-import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -123,31 +122,56 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                     )
-                  : ClipRRect(
-                      borderRadius: BorderRadius.circular(7),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        onPressed: () => {
-                          Navigator.pop(context),
-                        },
-                        child: Container(
-                          color: Theme.of(context).accentColor,
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 25,
+                  : Consumer<AuthProvider>(
+                      builder: (context, authProvider, _) => ClipRRect(
+                        borderRadius: BorderRadius.circular(7),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            minimumSize: Size.zero,
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: const Center(
-                            child: Text(
-                              "Finish",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600),
+                          onPressed: () {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            authProvider.verifyOTP().then((value) {
+                              if (value.statusCode == 200) {
+                                Navigator.pop(context);
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                              } else {
+                                if (authProvider.resMessage() != null) {
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                  Fluttertoast.showToast(
+                                    msg: authProvider.resMessage().toString(),
+                                  );
+                                }
+                              }
+                            });
+                          },
+                          child: Container(
+                            color: Theme.of(context).accentColor,
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 15,
+                              horizontal: 25,
+                            ),
+                            child: Center(
+                              child: _isLoading == false
+                                  ? const Text(
+                                      "Finish",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                    )
+                                  : const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
                             ),
                           ),
                         ),

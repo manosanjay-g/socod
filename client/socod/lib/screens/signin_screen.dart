@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:socod/providers/auth_provider.dart';
 
@@ -87,23 +90,6 @@ class _SignInScreenState extends State<SignInScreen> {
                         border: const OutlineInputBorder(),
                       ),
                     ),
-                    Consumer<AuthProvider>(
-                      builder: (context, authProvider, _) => Container(
-                        child: authProvider.resMessage() != null
-                            ? Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    authProvider.resMessage().toString(),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              )
-                            : null,
-                      ),
-                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -111,21 +97,25 @@ class _SignInScreenState extends State<SignInScreen> {
                       builder: (context, authProvider, _) => ClipRRect(
                         borderRadius: BorderRadius.circular(7),
                         child: TextButton(
-                          onPressed: () => {
-                            setState(() => {
-                                  _isLoading = true,
-                                }),
-                            authProvider
-                                .signIn(
-                                  _email.text,
-                                  _password.text,
-                                )
-                                .then((value) => {
-                                      if (value != null)
-                                        {
-                                          setState(() => {_isLoading = false})
-                                        }
-                                    }),
+                          onPressed: () {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            var res = authProvider.signIn(
+                              _email.text,
+                              _password.text,
+                            );
+                            res.then(
+                              (_) => {
+                                if (authProvider.resMessage() != null)
+                                  {
+                                    Fluttertoast.showToast(
+                                      msg: authProvider.resMessage().toString(),
+                                    ),
+                                    setState(() => {_isLoading = false})
+                                  }
+                              },
+                            );
                           },
                           style: TextButton.styleFrom(
                             minimumSize: Size.zero,

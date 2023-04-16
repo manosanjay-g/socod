@@ -94,8 +94,8 @@ class AuthProvider with ChangeNotifier {
     return res;
   }
 
-  Future verifyOTP(String otp) async {
-    final json = jsonEncode({"user_id": _userId, "otp": otp});
+  Future verifyOTP() async {
+    final json = jsonEncode({"user_id": _userId, "otp": otpController.text});
     final url = Uri.parse("http://10.0.2.2:8000/verification/verifyotp/");
 
     http.Response res = await http.post(
@@ -135,8 +135,8 @@ class AuthProvider with ChangeNotifier {
       body: json,
     );
     if (res.statusCode == 200) {
-      _userId = jsonDecode(res.body)["_id"];
-      _token = jsonDecode(res.body)["token"];
+      _userId = jsonDecode(res.body)["res"]["id"];
+      _token = jsonDecode(res.body)["res"]["token"];
     } else {
       _resMessage = jsonDecode(res.body)["message"];
     }
