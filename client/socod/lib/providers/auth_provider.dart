@@ -20,7 +20,12 @@ class AuthProvider with ChangeNotifier {
       "email": email,
       "password": password,
     };
-
+    if (!email.contains('@')) {
+      _errorMessage = "Enter a valid email address";
+      return json;
+    } else if (password.length < 8) {
+      _errorMessage = "Password should be more than or equal to 8 characters ";
+    }
     final url = Uri.parse("http://10.0.2.2:8000/auth/login");
 
     http.Response res = await http.post(

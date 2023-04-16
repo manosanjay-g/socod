@@ -92,10 +92,13 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: authProvider.errorMessage() != null
                             ? Column(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20,
                                   ),
-                                  Text(authProvider.errorMessage().toString()),
+                                  Text(
+                                    authProvider.errorMessage().toString(),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ],
                               )
                             : null,
