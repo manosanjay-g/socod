@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:socod/providers/auth_provider.dart';
 
 class BioInterestsField extends StatelessWidget {
   const BioInterestsField({super.key});
@@ -6,31 +8,34 @@ class BioInterestsField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        Text(
+      children: [
+        const Text(
           "About you",
           style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        TextField(
-          maxLines: 8,
-          cursorColor: Colors.white,
-          decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white,
+        Consumer<AuthProvider>(
+          builder: (context, authProvider, _) => TextField(
+            controller: authProvider.bioController,
+            maxLines: 8,
+            cursorColor: Colors.white,
+            decoration: const InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.white,
+                ),
               ),
+              hintText: "Enter your bio",
+              border: OutlineInputBorder(),
             ),
-            hintText: "Enter your bio",
-            border: OutlineInputBorder(),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
       ],

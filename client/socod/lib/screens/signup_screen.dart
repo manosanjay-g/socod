@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:socod/providers/auth_provider.dart';
 import 'package:socod/widgets/signup_screen/bio_interests_field.dart';
 import 'package:socod/widgets/signup_screen/dept_field.dart';
 import 'package:socod/widgets/signup_screen/email_password_field.dart';
@@ -6,6 +10,7 @@ import 'package:socod/widgets/signup_screen/gender_field.dart';
 import 'package:socod/widgets/signup_screen/name_field.dart';
 import 'package:socod/widgets/signup_screen/otp_field.dart';
 import 'package:socod/widgets/signup_screen/profile_image_field.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -16,15 +21,17 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   int _count = 0;
+  bool _isLoading = false;
   final List _pages = [
     const NameField(),
     GenderField(),
     DeptField(),
     const EmailPasswordField(),
     const BioInterestsField(),
-    const ProfileImageField(),
+    ProfileImageField(),
     const OTPField(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -54,35 +61,63 @@ class _SignUpScreenState extends State<SignUpScreen> {
             children: [
               _pages[_count],
               _count < _pages.length - 1
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(7),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        onPressed: () => {
-                          setState(() {
-                            if (_count < _pages.length - 1) {
-                              _count = _count + 1;
-                            }
-                          })
-                        },
-                        child: Container(
-                          color: Theme.of(context).accentColor,
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 25,
+                  ? Consumer<AuthProvider>(
+                      builder: (context, authProvider, _) => ClipRRect(
+                        borderRadius: BorderRadius.circular(7),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            minimumSize: Size.zero,
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: const Center(
-                            child: Text(
-                              "Next",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600),
+                          onPressed: () => {
+                            setState(() {
+                              if (_count < _pages.length - 1) {
+                                if (_count == 5) {
+                                  setState(() => {
+                                        _isLoading = true,
+                                      });
+                                  var res = authProvider.signUp();
+                                  res.then((value) {
+                                    if (value != null) {
+                                      if (value.statusCode != 200 &&
+                                          value.statusCode != 201) {
+                                        Fluttertoast.showToast(
+                                            msg: jsonDecode(
+                                                value.body)["message"]);
+                                      } else {
+                                        _count = _count + 1;
+                                      }
+                                      setState(() {
+                                        _isLoading = false;
+                                      });
+                                    }
+                                  });
+                                } else {
+                                  _count = _count + 1;
+                                }
+                              }
+                            }),
+                          },
+                          child: Container(
+                            color: Theme.of(context).accentColor,
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 15,
+                              horizontal: 25,
+                            ),
+                            child: Center(
+                              child: _isLoading == false
+                                  ? const Text(
+                                      "Next",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                    )
+                                  : const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
                             ),
                           ),
                         ),

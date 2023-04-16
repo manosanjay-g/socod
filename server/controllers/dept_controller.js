@@ -5,13 +5,15 @@ const createDept = async(req,res) => {
         const {name,block} = req.body
         if(!(name && block)){
             return res.status(400).json({
-                error:"All inputs are required"
+                message:"All fields are required",
+                res:null
             })
         }
         const oldDept = await deptModel.findOne({name})
         if(oldDept){
             res.status(409).json({
-                error:"Department already exists"
+                message:"Department already exists",
+                res:null
             })
         }
         const dept = await deptModel.create({
@@ -19,7 +21,10 @@ const createDept = async(req,res) => {
             block
         })
 
-        return res.status(200).json({dept})
+        return res.status(200).json({
+            message:"Department created",
+            res:dept
+        })
 
     } catch (error) {
         console.log(error);

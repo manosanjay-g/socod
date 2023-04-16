@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:socod/providers/auth_provider.dart';
 
-class NameField extends StatefulWidget {
-  const NameField({
-    super.key,
-  });
+class NameField extends StatelessWidget {
+  const NameField({super.key});
 
-  @override
-  State<NameField> createState() => _NameFieldState();
-}
-
-class _NameFieldState extends State<NameField> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        Center(
+      children: [
+        const Center(
           child: Text(
             "What's your Name?",
             style: TextStyle(
@@ -23,22 +18,25 @@ class _NameFieldState extends State<NameField> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        TextField(
-          cursorColor: Colors.white,
-          decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white,
+        Consumer<AuthProvider>(
+          builder: (context, authProvider, _) => TextField(
+            controller: authProvider.nameController,
+            cursorColor: Colors.white,
+            decoration: const InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.white,
+                ),
               ),
+              hintText: "Enter your name",
+              border: OutlineInputBorder(),
             ),
-            hintText: "Enter your name",
-            border: OutlineInputBorder(),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
       ],

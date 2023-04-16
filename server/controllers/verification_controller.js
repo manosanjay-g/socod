@@ -22,7 +22,8 @@ const sendOTP = async(req,res)=>{
         const otp = `${Math.floor(1000 + Math.random() * 9000)}`
         if(!user_id){
             return res.status(400).json({
-                error:"All inputs are required"
+                message:"All fields are required",
+                res:null
             })
         }
         const mailConfig = {
@@ -43,11 +44,10 @@ const sendOTP = async(req,res)=>{
         await transporter.sendMail(mailConfig);
 
         return res.status(200).json({
-            status:"Pending",
-            message:"Verification email sent",
-            data:{
-                user_id, 
-                email
+            message:"OTP Send",
+            res:{
+                id:user_id,
+                email:email
             }
         })
     } catch (error) {
@@ -60,20 +60,22 @@ const verifyOTP = async(req,res)=>{
         const {user_id,otp} = req.body
         if(!(user_id && otp)){
             return res.status(400).json({
-                error:"All inputs are required"
+                message:"All fields are required",
+                res:null
             })
         }
-        const userOTP = await otpModel.findOne({user_id})
-
+        const userOTP = await otpModel.findOne({user_id});
         if(!userOTP){
             return res.status(400).json({
-                error:"OTP hasn't been generated.Generate OTP"
+                message:"OTP hasn't been generated.Generate OTP",
+                res:null
             })
         }
 
         if(userOTP.expires_at < Date.now()){
             return res.status(400).json({
-                error:"OTP has expired"
+                message:"OTP has expired",
+                res:null
             })
         }
 
@@ -81,7 +83,8 @@ const verifyOTP = async(req,res)=>{
 
         if(!deHashedOTP){
             return res.status(400).json({
-                error:"Wrong OTP"
+                message:"Wrong OTP",
+                res:null
             })
         }
         const user =await userModel.findByIdAndUpdate({_id:user_id},{
@@ -90,8 +93,12 @@ const verifyOTP = async(req,res)=>{
 
 
         return res.status(200).json({
-            user: user._id,
-            status: user.verified
+            message:"User verified",
+            res:{
+                id:user._id,
+                status:user.verified,
+                token:user.token
+            }
         })
     } catch (error) {
         console.log(error);

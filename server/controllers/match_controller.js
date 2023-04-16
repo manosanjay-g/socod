@@ -6,7 +6,8 @@ const likePerson = async (req, res) => {
         const { giver_id, receiver_id } = req.body
         if (!(giver_id && receiver_id)) {
             return res.status(400).json({
-                error: "All inputs are required"
+                message:"All fields are required",
+                res:null
             })
         }
 
@@ -19,7 +20,8 @@ const likePerson = async (req, res) => {
         })
         if (oldLikeActivity) {
             return res.status(201).json({
-                error: "Like Activity already present"
+                message:"Like activity already present",
+                res:null
             })
         }
         const likeActivity = await activityModel.create({
@@ -48,12 +50,14 @@ const likePerson = async (req, res) => {
             await conversationModel.create({
                 members: [giver_id, receiver_id]
             })
-            console.log(`${user1.name} matched with ${user2.name}`);
 
         }
         res.status(201).json({
-            user,
-            likeActivity
+            message:"User like activity",
+            res:{
+                id:user._id,
+                activity:likeActivity
+            }
         })
     } catch (error) {
         console.log(error);
@@ -65,7 +69,8 @@ const unlikePerson = async (req, res) => {
         const { giver_id, receiver_id } = req.body
         if (!(giver_id && receiver_id)) {
             return res.status(400).json({
-                error: "All inputs are required"
+                message:"All fields are required",
+                res:null
             })
         }
         const user = userModel.findByIdAndUpdate({ _id: giver_id }, {
@@ -77,8 +82,11 @@ const unlikePerson = async (req, res) => {
             receiver_id
         })
         res.status(201).json({
-            user,
-            unlikeActivity
+            message:"User like activity",
+            res:{
+                id:user._id,
+                activity:likeActivity
+            }
         })
     } catch (error) {
         console.log(error);
@@ -90,14 +98,13 @@ const getRecommendations = async (req, res) => {
 
     if (!id) {
         return res.status(400).json({
-            error: "All inputs are required"
+            message:"All fields are required",
+            res:null
         })
     }
 
     const user = await userModel.findOne({ _id: id });
-    console.log(user.gender_interest);
-    console.log(user.gender);
-    console.log(user._id.toString());
+    
     const recommendations = await userModel.find({ gender: user.gender_interest, gender_interest: user.gender});
 
     const filteredRecommendations = recommendations.filter((e)=>{
@@ -106,7 +113,10 @@ const getRecommendations = async (req, res) => {
         }
     })
 
-    return res.status(200).json({ filteredRecommendations })
+    return res.status(200).json({
+        message:"Recommendations retrieved",
+        res:filteredRecommendations
+    })
 }
 
 module.exports = {

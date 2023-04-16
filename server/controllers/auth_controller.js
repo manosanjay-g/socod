@@ -4,21 +4,24 @@ const bcrypt = require('bcryptjs')
 
 const registerUser = async (req, res) => {
     try {
-        const { name, gender, gender_interest, bio, interests, phone, email, password, dept_id, year,roles } = req.body
-        if (!(name && gender && bio && phone && email && password && dept_id && year && gender_interest && roles)) {
+        const { name, gender, gender_interest, bio, interests, phone, email, password, dept_id, year, roles } = req.body
+        if (!(name && gender && bio && email && password && dept_id && year && gender_interest && roles)) {
             return res.status(400).json({
-                error: "All fields are required"
+                message: "All Fields are required",
+                res: null
             })
         }
         if (!(email.includes('rajalakshmi.edu.in'))) {
             return res.status(400).json({
-                error: "Must have an REC email"
+                message: "Must have an REC email",
+                res: null
             })
         }
         const oldUser = await userModel.findOne({ email });
         if (oldUser) {
             return res.status(409).json({
-                error: "User already exists"
+                message: "User already exists",
+                res: null
             })
         }
 
@@ -43,7 +46,10 @@ const registerUser = async (req, res) => {
         }, process.env.JWT_KEY)
         user.token = token;
         user.save()
-        res.status(201).json(user)
+        res.status(201).json({
+            message: "Account created",
+            res: user._id
+        })
     } catch (err) {
         console.log(err);
     }
@@ -53,18 +59,21 @@ const loginUser = async (req, res) => {
         const { email, password } = req.body
         if (!(email && password)) {
             return res.status(400).json({
-                error: "All fields are required"
+                message: "All fields are required",
+                res: null
             })
         }
         const user = await userModel.findOne({ email });
         if (user == null) {
             return res.status(409).json({
-                error: "User does not exist"
+                message: "User does not exists",
+                res: null
             })
         }
-        if(!user.verified){
+        if (!user.verified) {
             return res.status(400).json({
-                error:"User not verified"
+                message: "User is not verified",
+                res: null
             })
         }
 
@@ -76,10 +85,17 @@ const loginUser = async (req, res) => {
             }, process.env.JWT_KEY)
             user.token = token;
             user.save();
-            return res.status(200).json(user);
+            return res.status(200).json({
+                message: "User logged in",
+                res: {
+                    id: user._id,
+                    token: user.token
+                }
+            });
         }
         res.status(400).json({
-            error: "Invalid Credentials"
+            message: "Invalid credentials",
+            res: null
         })
     } catch (err) {
         console.log(err);

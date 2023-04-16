@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:socod/providers/auth_provider.dart';
 
 class GenderField extends StatelessWidget {
   GenderField({super.key});
@@ -19,17 +21,22 @@ class GenderField extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        DropdownButton<String>(
-          isExpanded: true,
-          hint: const Text("Select your Gender"),
-          borderRadius: BorderRadius.circular(7),
-          items: _genders.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (_) {},
+        Consumer<AuthProvider>(
+          builder: (context, authProvider, _) => DropdownButton<String>(
+            value: authProvider.genderController,
+            isExpanded: true,
+            hint: const Text("Select your Gender"),
+            borderRadius: BorderRadius.circular(7),
+            items: _genders.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              authProvider.setGender(newValue);
+            },
+          ),
         ),
         const SizedBox(
           height: 20,

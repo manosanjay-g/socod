@@ -1,5 +1,6 @@
 const userModel = require('../models/user_model')
 const verifyRoles =  (allowedRoles) => {
+    console.log(allowedRoles);
     return async (req,res,next) => {
         const roles = [...allowedRoles];
         const {id} = req.body;

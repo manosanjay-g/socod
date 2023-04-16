@@ -9,6 +9,6 @@ var routes = <String, WidgetBuilder>{
   '/matches-screen': (_) => const MatchesScreen(),
   '/otp-screen': (_) => const OTPScreen(),
   '/preferences-screen': (_) => const PreferencesScreen(),
-  '/signin-screen': (_) => SignInScreen(),
+  '/signin-screen': (_) => const SignInScreen(),
   '/signup-screen': (_) => const SignUpScreen(),
 };

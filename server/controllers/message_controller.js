@@ -6,7 +6,8 @@ const getConversations = async(req,res) => {
 
         if(!(id)){
             return res.status(400).json({
-                error:"All inputs are required"
+                message:"All fields are required",
+                res:null
             })
         }
 
@@ -14,7 +15,10 @@ const getConversations = async(req,res) => {
             $in:id
         }});
 
-        return res.status(200).json({conversations})
+        return res.status(200).json({
+            message:"Conversations retrieved",
+            res:conversations
+        })
     }catch(error){
         console.log(error);
     }
@@ -26,13 +30,17 @@ const getMessages = async(req,res) => {
 
         if(!(conversation_id)){
             return res.status(400).json({
-                error:"All inputs are required"
+                message:"All fields are required",
+                res:null
             })
         }
 
         const messages = await messageModel.find({conversation_id});
 
-        return res.status(200).json({messages})
+        return res.status(200).json({
+            message:"Messages retrieved",
+            res:messages
+        })
     }catch(error){
         console.log(error);
     }
@@ -43,7 +51,8 @@ const createMessage = async(req,res) => {
         const {conversation_id,sender_id,text} = req.body
         if(!(conversation_id && sender_id && text)){
             return res.status(400).json({
-                error:"All inputs are required"
+                message:"All fields are required",
+                res:null
             })
         }
 
@@ -53,7 +62,10 @@ const createMessage = async(req,res) => {
             text
         })
 
-        return res.status(200).json({message})
+        return res.status(200).json({
+            message:"Message sent",
+            res:message
+        })
     }catch(error){
         console.log(error);
     }

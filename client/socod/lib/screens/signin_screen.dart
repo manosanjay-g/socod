@@ -89,14 +89,14 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     Consumer<AuthProvider>(
                       builder: (context, authProvider, _) => Container(
-                        child: authProvider.errorMessage() != null
+                        child: authProvider.resMessage() != null
                             ? Column(
                                 children: [
                                   const SizedBox(
                                     height: 20,
                                   ),
                                   Text(
-                                    authProvider.errorMessage().toString(),
+                                    authProvider.resMessage().toString(),
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
