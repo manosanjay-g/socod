@@ -14,6 +14,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final _password = TextEditingController();
 
   bool _obscurePassword = true;
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,15 +105,30 @@ class _SignInScreenState extends State<SignInScreen> {
                       height: 20,
                     ),
                     Consumer<AuthProvider>(
-                      builder: (context, authProvider, _) => GestureDetector(
-                        onTap: () => {
-                          authProvider.signIn(
-                            _email.text,
-                            _password.text,
+                      builder: (context, authProvider, _) => ClipRRect(
+                        borderRadius: BorderRadius.circular(7),
+                        child: TextButton(
+                          onPressed: () => {
+                            setState(() => {
+                                  _isLoading = true,
+                                }),
+                            authProvider
+                                .signIn(
+                                  _email.text,
+                                  _password.text,
+                                )
+                                .then((value) => {
+                                      if (value != null)
+                                        {
+                                          setState(() => {_isLoading = false})
+                                        }
+                                    }),
+                          },
+                          style: TextButton.styleFrom(
+                            minimumSize: Size.zero,
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                        },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(7),
                           child: Container(
                             color: Theme.of(context).accentColor,
                             width: double.infinity,
@@ -121,7 +137,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               horizontal: 25,
                             ),
                             child: Center(
-                              child: authProvider.isLoading()
+                              child: _isLoading
                                   ? const CircularProgressIndicator(
                                       color: Colors.white,
                                     )
@@ -142,10 +158,16 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () => {Navigator.pushNamed(context, '/signup-screen')},
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(7),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(7),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    onPressed: () =>
+                        {Navigator.pushNamed(context, '/signup-screen')},
                     child: Container(
                       color: Theme.of(context).accentColor,
                       width: double.infinity,

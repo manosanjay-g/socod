@@ -8,17 +8,14 @@ class AuthProvider with ChangeNotifier {
   String? _token;
   String? _userId;
   String? _errorMessage;
-  bool _isLoading = false;
 
   String? token() => _token;
   String? userId() => _userId;
   String? errorMessage() => _errorMessage;
-  bool isLoading() => _isLoading;
 
   Future signUp(String email, String password) async {}
   Future signIn(String email, String password) async {
     _errorMessage = null;
-    _isLoading = true;
     final json = {
       "email": email,
       "password": password,
@@ -37,9 +34,9 @@ class AuthProvider with ChangeNotifier {
     } else {
       _errorMessage = jsonDecode(res.body)["error"];
     }
-    _isLoading = false;
 
     notifyListeners();
+    return res;
   }
 
   void signOut() {

@@ -54,16 +54,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
             children: [
               _pages[_count],
               _count < _pages.length - 1
-                  ? GestureDetector(
-                      onTap: () => {
-                        setState(() {
-                          if (_count < _pages.length - 1) {
-                            _count = _count + 1;
-                          }
-                        })
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(7),
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(7),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          minimumSize: Size.zero,
+                          padding: EdgeInsets.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        onPressed: () => {
+                          setState(() {
+                            if (_count < _pages.length - 1) {
+                              _count = _count + 1;
+                            }
+                          })
+                        },
                         child: Container(
                           color: Theme.of(context).accentColor,
                           width: double.infinity,
@@ -83,12 +88,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                     )
-                  : GestureDetector(
-                      onTap: () => {
-                        Navigator.pop(context),
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(7),
+                  : ClipRRect(
+                      borderRadius: BorderRadius.circular(7),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          minimumSize: Size.zero,
+                          padding: EdgeInsets.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        onPressed: () => {
+                          Navigator.pop(context),
+                        },
                         child: Container(
                           color: Theme.of(context).accentColor,
                           width: double.infinity,
