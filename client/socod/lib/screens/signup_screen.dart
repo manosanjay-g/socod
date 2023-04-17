@@ -92,7 +92,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       });
                                     }
                                   });
-                                } else {
+                                } else if (_count == 0 && authProvider.nameController.text ==""){
+                                  Fluttertoast.showToast(msg: "Enter the name");
+                                }else if(_count == 3) {
+                                  if(authProvider.nameController.text == "" && authProvider.passwordController.text == ""){
+                                    Fluttertoast.showToast(msg: "Enter email and password");
+                                  }
+                                  if(authProvider.emailController.text ==""){
+                                    Fluttertoast.showToast(msg: "Enter the email");
+                                  }else{
+                                    if(!authProvider.emailController.text.contains("rajalakshmi.edu.in")){
+                                      Fluttertoast.showToast(msg: "Enter REC Email");
+                                    }
+                                  }
+                                  if(authProvider.passwordController.text == ""){
+                                    Fluttertoast.showToast(msg: "Enter the password");
+                                  }else{
+                                    if(authProvider.passwordController.text.length < 3){
+                                      Fluttertoast.showToast(msg: "password is too short");
+                                    }
+                                    if(authProvider.passwordController.text.length < 3){
+                                      Fluttertoast.showToast(msg: "password is too short");
+                                    }
+                                    if(authProvider.passwordController.text.length > 12) {
+                                      Fluttertoast.showToast(
+                                          msg: "password is too Long");
+                                    }
+                                  }
+                                    if(authProvider.passwordController.text != authProvider.confirmPasswordController.text){
+                                      Fluttertoast.showToast(msg: "password dose not match");
+                                    }
+
+                                }else{
                                   _count = _count + 1;
                                 }
                               }
