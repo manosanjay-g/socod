@@ -21,8 +21,9 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   int _count = 0;
   bool _isLoading = false;
+  bool isnamefilled = false;
   final List _pages = [
-    const NameField(),
+    NameField(isfilled:false),
     GenderField(),
     DeptField(),
     const EmailPasswordField(),
@@ -92,40 +93,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       });
                                     }
                                   });
-                                } else if (_count == 0 && authProvider.nameController.text ==""){
-                                  Fluttertoast.showToast(msg: "Enter the name");
-                                }else if(_count == 3) {
-                                  if(authProvider.nameController.text == "" && authProvider.passwordController.text == ""){
-                                    Fluttertoast.showToast(msg: "Enter email and password");
-                                  }
-                                  if(authProvider.emailController.text ==""){
-                                    Fluttertoast.showToast(msg: "Enter the email");
-                                  }else{
-                                    if(!authProvider.emailController.text.contains("rajalakshmi.edu.in")){
-                                      Fluttertoast.showToast(msg: "Enter REC Email");
-                                    }
-                                  }
-                                  if(authProvider.passwordController.text == ""){
-                                    Fluttertoast.showToast(msg: "Enter the password");
-                                  }else{
-                                    if(authProvider.passwordController.text.length < 3){
-                                      Fluttertoast.showToast(msg: "password is too short");
-                                    }
-                                    if(authProvider.passwordController.text.length < 3){
-                                      Fluttertoast.showToast(msg: "password is too short");
-                                    }
-                                    if(authProvider.passwordController.text.length > 12) {
-                                      Fluttertoast.showToast(
-                                          msg: "password is too Long");
-                                    }
-                                  }
-                                    if(authProvider.passwordController.text != authProvider.confirmPasswordController.text){
-                                      Fluttertoast.showToast(msg: "password dose not match");
-                                    }
-
-                                }else{
-                                  _count = _count + 1;
+                                } else if (_count == 0 &&
+                                    authProvider.nameController.text != "") {
+                                  setState(() {
+                                    NameField(isfilled:true);
+                                  });
                                 }
+                                  _count = _count + 1;
+
                               }
                             }),
                           },

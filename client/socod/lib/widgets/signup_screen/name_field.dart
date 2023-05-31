@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:socod/providers/auth_provider.dart';
 
-class NameField extends StatelessWidget {
-  const NameField({super.key});
+class NameField extends StatefulWidget {
+  final bool isfilled;
+  const NameField({super.key, required this.isfilled});
 
+  @override
+  State<NameField> createState() => _NameFieldState();
+}
+
+class _NameFieldState extends State<NameField> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,10 +31,10 @@ class NameField extends StatelessWidget {
           builder: (context, authProvider, _) => TextField(
             controller: authProvider.nameController,
             cursorColor: Colors.white,
-            decoration: const InputDecoration(
+            decoration:  InputDecoration(
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.white,
+                  color:widget.isfilled?Colors.white:Colors.red,
                 ),
               ),
               hintText: "Enter your name",
