@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:socod/providers/auth_provider.dart';
+import 'package:socod/validators/validators.dart';
 import 'package:socod/widgets/signup_screen/bio_interests_field.dart';
 import 'package:socod/widgets/signup_screen/dept_field.dart';
 import 'package:socod/widgets/signup_screen/email_password_field.dart';
@@ -21,9 +22,8 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   int _count = 0;
   bool _isLoading = false;
-  bool isnamefilled = false;
   final List _pages = [
-    NameField(isfilled:false),
+    NameField(isfilled:Validator.isNameFilled),
     GenderField(),
     DeptField(),
     const EmailPasswordField(),
@@ -94,10 +94,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     }
                                   });
                                 } else if (_count == 0 &&
-                                    authProvider.nameController.text != "") {
-                                  setState(() {
-                                    NameField(isfilled:true);
-                                  });
+                                    authProvider.nameController.text.length > 0) {
+                                    setState(() {
+                                      Validator.isNameFilled = true;
+                                    });
+                                    NameField(isfilled:Validator.isNameFilled);
                                 }
                                   _count = _count + 1;
 
