@@ -101,7 +101,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     }
                                   });
                                 }
-                                _count = _count + 1;
+                                if(nameKey.currentState!.validate()){
+                                  _count = _count + 1;
+                                }
                               }
                             }),
                           },

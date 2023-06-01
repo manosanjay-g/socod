@@ -17,51 +17,60 @@ class _NameFieldState extends State<NameField> {
   @override
   Widget build(BuildContext context) {
 
-    return Column(
-      children: [
-        const Center(
-          child: Text(
-            "What's your Name?",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+    return Form(
+      key: widget.isfilled,
+      child: Column(
+        children: [
+          const Center(
+            child: Text(
+              "What's your Name?",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Consumer<AuthProvider>(
-          builder: (context, authProvider, _) {
-            Future.delayed(Duration(milliseconds: 5), (){
-              if(authProvider.nameController.text.isEmpty){
-                setState(() {
-                  filedcolor = Colors.red;
-                });
-              }else{
-                setState(() {
-                  filedcolor = Colors.white;
-                });
-              }
-            });
-            return TextField(
-            controller: authProvider.nameController,
-            cursorColor: Colors.white,
-            decoration:  InputDecoration(
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color:filedcolor,
+          const SizedBox(
+            height: 20,
+          ),
+          Consumer<AuthProvider>(
+            builder: (context, authProvider, _) {
+              Future.delayed(Duration(milliseconds: 5), (){
+                if(authProvider.nameController.text.isEmpty){
+                  setState(() {
+                    filedcolor = Colors.red;
+                  });
+                }else{
+                  setState(() {
+                    filedcolor = Colors.white;
+                  });
+                }
+              });
+              return TextFormField(
+              controller: authProvider.nameController,
+              cursorColor: Colors.white,
+              validator: (val){
+                if(val!.isEmpty){
+                  return "this filed is needed";
+                }
+              },
+
+              decoration:  InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color:filedcolor,
+                  ),
                 ),
+                hintText: "Enter your name",
+                border: OutlineInputBorder(),
               ),
-              hintText: "Enter your name",
-              border: OutlineInputBorder(),
-            ),
-          );}
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-      ],
+            );}
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
     );
   }
 }
