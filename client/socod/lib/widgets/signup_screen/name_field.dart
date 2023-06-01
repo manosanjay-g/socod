@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:socod/providers/auth_provider.dart';
 
 class NameField extends StatefulWidget {
-  final bool isfilled;
+  final GlobalKey<FormState> isfilled;
   const NameField({super.key, required this.isfilled});
 
   @override
@@ -11,8 +11,12 @@ class NameField extends StatefulWidget {
 }
 
 class _NameFieldState extends State<NameField> {
+  late Color filedcolor;
+
+
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: [
         const Center(
@@ -28,19 +32,31 @@ class _NameFieldState extends State<NameField> {
           height: 20,
         ),
         Consumer<AuthProvider>(
-          builder: (context, authProvider, _) => TextField(
+          builder: (context, authProvider, _) {
+            Future.delayed(Duration(milliseconds: 5), (){
+              if(authProvider.nameController.text.isEmpty){
+                setState(() {
+                  filedcolor = Colors.red;
+                });
+              }else{
+                setState(() {
+                  filedcolor = Colors.white;
+                });
+              }
+            });
+            return TextField(
             controller: authProvider.nameController,
             cursorColor: Colors.white,
             decoration:  InputDecoration(
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color:widget.isfilled?Colors.white:Colors.red,
+                  color:filedcolor,
                 ),
               ),
               hintText: "Enter your name",
               border: OutlineInputBorder(),
             ),
-          ),
+          );}
         ),
         const SizedBox(
           height: 20,

@@ -22,15 +22,22 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   int _count = 0;
   bool _isLoading = false;
-  final List _pages = [
-    NameField(isfilled:Validator.isNameFilled),
-    GenderField(),
-    DeptField(),
-    const EmailPasswordField(),
-    const BioInterestsField(),
-    ProfileImageField(),
-    const OTPField(),
-  ];
+  final nameKey = GlobalKey<FormState>();
+  late List _pages;
+  @override
+  void initState() {
+    // TODO: implement initState
+    _pages = [
+      NameField(isfilled: nameKey),
+      GenderField(),
+      DeptField(),
+      const EmailPasswordField(),
+      const BioInterestsField(),
+      ProfileImageField(),
+      const OTPField(),
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,15 +100,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       });
                                     }
                                   });
-                                } else if (_count == 0 &&
-                                    authProvider.nameController.text.length > 0) {
-                                    setState(() {
-                                      Validator.isNameFilled = true;
-                                    });
-                                    NameField(isfilled:Validator.isNameFilled);
                                 }
-                                  _count = _count + 1;
-
+                                _count = _count + 1;
                               }
                             }),
                           },
