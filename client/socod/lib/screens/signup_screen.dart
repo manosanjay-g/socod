@@ -23,6 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   int _count = 0;
   bool _isLoading = false;
   final nameKey = GlobalKey<FormState>();
+  final emailNPasswordKey = GlobalKey<FormState>();
   late List _pages;
   @override
   void initState() {
@@ -31,7 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       NameField(isfilled: nameKey),
       GenderField(),
       DeptField(),
-      const EmailPasswordField(),
+      EmailPasswordField(formKey: emailNPasswordKey,),
       const BioInterestsField(),
       ProfileImageField(),
       const OTPField(),
@@ -61,134 +62,136 @@ class _SignUpScreenState extends State<SignUpScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _pages[_count],
-              _count < _pages.length - 1
-                  ? Consumer<AuthProvider>(
-                      builder: (context, authProvider, _) => ClipRRect(
-                        borderRadius: BorderRadius.circular(7),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            minimumSize: Size.zero,
-                            padding: EdgeInsets.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          onPressed: () => {
-                            setState(() {
-                              if (_count < _pages.length - 1) {
-                                if (_count == 5) {
-                                  setState(() => {
-                                        _isLoading = true,
-                                      });
-                                  var res = authProvider.signUp();
-                                  res.then((value) {
-                                    if (value != null) {
-                                      if (value.statusCode != 200 &&
-                                          value.statusCode != 201) {
-                                        Fluttertoast.showToast(
-                                            msg: jsonDecode(
-                                                value.body)["message"]);
-                                      } else {
-                                        _count = _count + 1;
-                                      }
-                                      setState(() {
-                                        _isLoading = false;
-                                      });
-                                    }
-                                  });
-                                }
-                                if(nameKey.currentState!.validate()){
-                                  _count = _count + 1;
-                                }
-                              }
-                            }),
-                          },
-                          child: Container(
-                            color: Theme.of(context).accentColor,
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 15,
-                              horizontal: 25,
+        body: Center(child:SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _pages[_count],
+                _count < _pages.length - 1
+                    ? Consumer<AuthProvider>(
+                        builder: (context, authProvider, _) => ClipRRect(
+                          borderRadius: BorderRadius.circular(7),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              minimumSize: Size.zero,
+                              padding: EdgeInsets.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            child: Center(
-                              child: _isLoading == false
-                                  ? const Text(
-                                      "Next",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600),
-                                    )
-                                  : const CircularProgressIndicator(
-                                      color: Colors.white,
-                                    ),
+                            onPressed: () => {
+                              setState(() {
+                                if (_count < _pages.length - 1) {
+                                  if (_count == 5) {
+                                    setState(() => {
+                                          _isLoading = true,
+                                        });
+                                    var res = authProvider.signUp();
+                                    res.then((value) {
+                                      if (value != null) {
+                                        if (value.statusCode != 200 &&
+                                            value.statusCode != 201) {
+                                          Fluttertoast.showToast(
+                                              msg: jsonDecode(
+                                                  value.body)["message"]);
+                                        } else {
+                                          _count = _count + 1;
+                                        }
+                                        setState(() {
+                                          _isLoading = false;
+                                        });
+                                      }
+                                    });
+                                  }
+                                  if(nameKey.currentState!.validate()||emailNPasswordKey.currentState!.validate()){
+                                    _count = _count + 1;
+                                  }
+                                }
+                              }),
+                            },
+                            child: Container(
+                              color: Theme.of(context).accentColor,
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 25,
+                              ),
+                              child: Center(
+                                child: _isLoading == false
+                                    ? const Text(
+                                        "Next",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    : const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                  : Consumer<AuthProvider>(
-                      builder: (context, authProvider, _) => ClipRRect(
-                        borderRadius: BorderRadius.circular(7),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            minimumSize: Size.zero,
-                            padding: EdgeInsets.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            authProvider.verifyOTP().then((value) {
-                              if (value.statusCode == 200) {
-                                Navigator.pop(context);
-                                setState(() {
-                                  _isLoading = false;
-                                });
-                              } else {
-                                if (authProvider.resMessage() != null) {
+                      )
+                    : Consumer<AuthProvider>(
+                        builder: (context, authProvider, _) => ClipRRect(
+                          borderRadius: BorderRadius.circular(7),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              minimumSize: Size.zero,
+                              padding: EdgeInsets.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              authProvider.verifyOTP().then((value) {
+                                if (value.statusCode == 200) {
+                                  Navigator.pop(context);
                                   setState(() {
                                     _isLoading = false;
                                   });
-                                  Fluttertoast.showToast(
-                                    msg: authProvider.resMessage().toString(),
-                                  );
+                                } else {
+                                  if (authProvider.resMessage() != null) {
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
+                                    Fluttertoast.showToast(
+                                      msg: authProvider.resMessage().toString(),
+                                    );
+                                  }
                                 }
-                              }
-                            });
-                          },
-                          child: Container(
-                            color: Theme.of(context).accentColor,
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 15,
-                              horizontal: 25,
-                            ),
-                            child: Center(
-                              child: _isLoading == false
-                                  ? const Text(
-                                      "Finish",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600),
-                                    )
-                                  : const CircularProgressIndicator(
-                                      color: Colors.white,
-                                    ),
+                              });
+                            },
+                            child: Container(
+                              color: Theme.of(context).accentColor,
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 25,
+                              ),
+                              child: Center(
+                                child: _isLoading == false
+                                    ? const Text(
+                                        "Finish",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    : const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-            ],
+              ],
+            ),
           ),
-        ),
+        )),
       ),
     );
   }
