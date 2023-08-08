@@ -40,7 +40,7 @@ const start = async () => {
         await connectDB(process.env.MONGODB_URI)
         app.listen(process.env.PORT,()=>{
             console.log(`Server listening on PORT ${process.env.PORT}`);
-        })
+        },)
     }catch(err){
         console.log(err);
         process.exit(1);
