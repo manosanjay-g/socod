@@ -7,7 +7,7 @@ Widget BuildTextField(String hintText,String textType,String imageName,void Func
  return Container(
   margin: EdgeInsets.only(bottom: 20.h),
   height: 50.h,
-  width: 325.h,
+  width: double.infinity,
   decoration: BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(15),
@@ -26,9 +26,10 @@ Widget BuildTextField(String hintText,String textType,String imageName,void Func
           width: 270.w,
           child:  TextField(
             onChanged: (value) => func!(value),
-            keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
               hintText: hintText,
+              isDense: true,
+              contentPadding: EdgeInsets.all(10),
               hintStyle:TextStyle(fontSize: 14.sp,color: AppColors.primarySecondaryElementText),
               border: const OutlineInputBorder(
                 borderSide: BorderSide(
