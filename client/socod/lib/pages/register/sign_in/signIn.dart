@@ -23,40 +23,39 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
-      return SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          color: Colors.white,
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(
-              height: 40.h,
-            ),
-            reusableText("Email", color: AppColors.primaryThreeElementText),
-            SizedBox(
-              height: 5.h,
-            ),
-            BuildTextField("Enter your Email", "email", "user", (value) {
-              context.read<SignInBloc>().add(EmailEvent(value));
-            }),
-            SizedBox(
-              height: 20.h,
-            ),
-            reusableText("Password", color: AppColors.primaryThreeElementText),
-            SizedBox(
-              height: 5.h,
-            ),
-            BuildTextField("Enter your Password", "password", "lock", (value) {
-              context.read<SignInBloc>().add(PasswordEvent(value));
-            }),
-            SizedBox(height: 40.h),
-            BuildLoginAndRegisterButton("Log In", "login", () {
-              print("Login called");
-              SignInController(context: context).handleSignIn();
-            }),
-            BuildLoginAndRegisterButton("Sign Up", "signup", () {})
-          ]),
+      return Center(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
+            alignment: Alignment.center,
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+
+              reusableText("Email", color: AppColors.primaryThreeElementText),
+              SizedBox(
+                height: 5.h,
+              ),
+              BuildTextField("Enter your Email", "email", "user", (value) {
+                context.read<SignInBloc>().add(EmailEvent(value));
+              }),
+              SizedBox(
+                height: 20.h,
+              ),
+              reusableText("Password", color: AppColors.primaryThreeElementText),
+              SizedBox(
+                height: 5.h,
+              ),
+              BuildTextField("Enter your Password", "password", "lock", (value) {
+                context.read<SignInBloc>().add(PasswordEvent(value));
+              }),
+              SizedBox(height: 5.h),
+              BuildLoginAndRegisterButton("Log In", "login", () {
+                print("Login called");
+                SignInController(context: context).handleSignIn();
+              }),
+              BuildLoginAndRegisterButton("Sign Up", "signup", () {})
+            ]),
+          ),
         ),
       );
     });

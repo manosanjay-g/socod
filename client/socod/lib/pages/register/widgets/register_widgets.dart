@@ -74,7 +74,7 @@ Widget BuildLoginAndRegisterButton(String buttonName,String buttontype,void Func
   return GestureDetector(
     onTap: func,
     child: Container(
-      margin: EdgeInsets.only(top:buttontype=="login"?40:30),
+      margin: EdgeInsets.only(top:buttontype=="login"?0:20),
       height: 50.h,
       width: 325.w,
       decoration: BoxDecoration(
