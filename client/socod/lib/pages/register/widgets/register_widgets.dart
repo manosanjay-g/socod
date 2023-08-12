@@ -117,7 +117,7 @@ Widget BuildBioTextField(void Function(String value)? func){
  return Container(
   margin: EdgeInsets.only(bottom: 20.h),
   height: 50.h,
-  width: 325.h,
+  width: double.infinity,
   decoration: BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(15),
@@ -126,7 +126,7 @@ Widget BuildBioTextField(void Function(String value)? func){
     child: Row(
       children: [
         Container(
-          height: 16.h,
+          height: double.infinity,
           width: 16.w,
           margin: EdgeInsets.only(left: 16.w),
           child: Icon(Icons.book,color: Colors.black,size: 20,),
@@ -141,6 +141,7 @@ Widget BuildBioTextField(void Function(String value)? func){
             maxLines: null,
             decoration: InputDecoration(
               hintText: "Fill in your bio",
+              contentPadding: EdgeInsets.all(10),
               hintStyle:TextStyle(fontSize: 14.sp,color: AppColors.primarySecondaryElementText),
               border: const OutlineInputBorder(
                 borderSide: BorderSide(
